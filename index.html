@@ -232,7 +232,7 @@
 </div>
 
 <script>
-const TEMA = {"cor":"#00ff80","tom":0,"fundo":"#0a0f0a","fundoImagem":"https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXo1bmhybHZjODg0M3lkYW92MG00Z3cwNzdwODJ3b2pkZXU3aXdqcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YrIq06kG5yrtxQEhj3/giphy.gif","fonteEstilo":"bold","fonteForma":"century","fonteEfeito":"3d","fonteTamanho":2.8,"fundosImagem":["https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXo1bmhybHZjODg0M3lkYW92MG00Z3cwNzdwODJ3b2pkZXU3aXdqcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YrIq06kG5yrtxQEhj3/giphy.gif","https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmxhb3IwYjEycTVtNDJ3NmYzZXNieWNkbnYxb240NXI4NjJxMWRzMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/EyiufcIwTdF35pNIFS/giphy.gif","https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2Jldm0wMnlybnFzbWxzdDY3aHp4ang1eTFrYmwybDA0MG1yN2h3aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jMbfmwkrcm82PRlYa9/giphy.gif","https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnc1Z2xheDAzd280aXVlNzU2anVndjd5bnpsYm5wa2k1NTg5cjl3dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/uUGQvNHVBw0W4m5eb9/giphy.gif","https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExemd6eG9lYmVjbzM4ZWQ3NTVoZHphd2lrMmhkcjBza3JyeWlnYmhrZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GMN2Dp0BQC4hz6k22Q/giphy.gif"]};
+const TEMA = {"cor":"#00ff80","tom":0,"fundo":"#0a0f0a","fundoImagem":"","fundosImagem":["https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXo1bmhybHZjODg0M3lkYW92MG00Z3cwNzdwODJ3b2pkZXU3aXdqcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YrIq06kG5yrtxQEhj3/giphy.gif","https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmxhb3IwYjEycTVtNDJ3NmYzZXNieWNkbnYxb240NXI4NjJxMWRzMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/EyiufcIwTdF35pNIFS/giphy.gif","https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2Jldm0wMnlybnFzbWxzdDY3aHp4ang1eTFrYmwybDA0MG1yN2h3aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jMbfmwkrcm82PRlYa9/giphy.gif","https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnc1Z2xheDAzd280aXVlNzU2anVndjd5bnpsYm5wa2k1NTg5cjl3dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/uUGQvNHVBw0W4m5eb9/giphy.gif","https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExemd6eG9lYmVjbzM4ZWQ3NTVoZHphd2lrMmhkcjBza3JyeWlnYmhrZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GMN2Dp0BQC4hz6k22Q/giphy.gif"],"fonteEstilo":"bold","fonteForma":"century","fonteEfeito":"3d","fonteTamanho":2.8};
 const FONTES = {
   "padrao": "'Segoe UI', system-ui, sans-serif",
   "arial": "Arial, sans-serif",
@@ -289,7 +289,11 @@ const FONTES = {
     return `${parseInt(hex.substr(0,2),16)}, ${parseInt(hex.substr(2,2),16)}, ${parseInt(hex.substr(4,2),16)}`;
   })(TEMA.cor));
   root.style.setProperty("--fundo", TEMA.fundo);
-  const fundoImagem = TEMA.fundoImagem ? 'url("' + TEMA.fundoImagem.replace(/"/g, '\"') + '")' : "none";
+  const fundosDisponiveis = Array.isArray(TEMA.fundosImagem) ? TEMA.fundosImagem.filter(Boolean) : [];
+  const fundoEscolhido = fundosDisponiveis.length
+    ? fundosDisponiveis[Math.floor(Math.random() * fundosDisponiveis.length)]
+    : TEMA.fundoImagem;
+  const fundoImagem = fundoEscolhido ? 'url("' + fundoEscolhido.replace(/"/g, '\"') + '")' : "none";
   root.style.setProperty("--fundo-imagem", fundoImagem);
   root.style.setProperty("--titulo-fonte", FONTES[TEMA.fonteForma] || FONTES.padrao);
   root.style.setProperty("--titulo-peso", TEMA.fonteEstilo.includes("bold") ? "800" : "500");
@@ -401,8 +405,6 @@ const linksDownload = [
   "https://s.shopee.com.br/902lACp5sm"
 ];
 const linksDownloadAtivos = true;
-const anunciosDownloadP1 = ["https://www.profitableratecpmnetwork.com/cbhgpudtu3?key=77a710a4a265c17ccf301baac427c03f"];
-const anunciosDownloadP1Ativos = true;
 const logoUrl = "https://i.pinimg.com/736x/4f/96/91/4f9691029dfac734814cbb136909053e.jpg";
 const REDES = {
   "tiktok": {
@@ -589,14 +591,7 @@ function criarItemDownload(dl, pagina1 = false) {
   btn.className = "btn-download";
   btn.innerHTML = `${svgCadeado} <span>Download</span>`;
   btn.onclick = () => {
-    if (pagina1 && anunciosDownloadP1Ativos) {
-      const linkAnuncio = dl.linkPropaganda || (
-        anunciosDownloadP1.length
-          ? anunciosDownloadP1[Math.floor(Math.random() * anunciosDownloadP1.length)]
-          : ""
-      );
-      if (linkAnuncio) window.open(linkAnuncio, "_blank", "noopener");
-    }
+    if (pagina1 && dl.linkPropaganda) window.open(dl.linkPropaganda, "_blank", "noopener");
     iniciarProgressoBotao(dl, btn);
   };
   item.appendChild(nome); item.appendChild(btn);
